@@ -1,0 +1,43 @@
+排序
+    通用信息：
+        迭代器用于指明范围，排序都可以选择子集进行排序
+        都在末尾提供一个自定义的排序规则，要求接收迭代器实际指向的元素，可以使用const auto&
+
+    1）std::sort
+        用于 升序排序 指定范围内的迭代器 ，如果提供比较函数可以自定义排序规则
+        sort(v.begin(), v.end(), [](const STRUCT& a, const STRUCT& b){
+            return a.val > b.val;
+            });
+
+        O(n log n) / O(log n)
+
+        使用须知：
+            迭代器需要支持随机访问，需要存储本质是数组
+            end()指向末尾元素的下一个，即0 ~ n范围对于排序范围为0 ~ n-1
+            排序并不稳定（用于结构体排序时需要注意，使用stable_sort）
+
+    2）std::stable_sort
+        相较sort是稳定的
+    
+    3）std::partial_sort
+        部分排序
+        partial_sort(v.begin(), v.begin() + 4, v.end());
+        设区间1为v.begin()到v.begin() + 4， 区间2为v.begin() + 4到v.end()
+        如果不改变排序规则，从所有区间找出最小元素以升序填充区间1，本质是交换数组元素顺序
+
+    4）std::nth_element
+        nth_element(v.begin(), v.begin() + 4, v.end())
+        第二个参数为nth
+        找出第nth迭代器的元素，将其余元素分别以小大为区分，原序排在nth的左右两侧
+        该方法用途不明，选用迭代器位置与排序结果看上去无关
+
+    5）std::is_sorted
+        bool 区间范围内是否有序
+
+    6）std::reverse
+        区间反转
+
+    7）std::rotate
+        rotate(v.begin(), v.begin() + 2, v.end())
+        将区间1挪到区间2后面去
+
